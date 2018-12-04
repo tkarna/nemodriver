@@ -28,6 +28,7 @@
       cn_ocerst_indir = "initialstate/"         !  directory from which to read input ocean restarts
       cn_ocerst_out   = "restart_out"   !  suffix of ocean restart name (output)
       cn_ocerst_outdir = "output/restarts/"         !  directory in which to write output ocean restarts
+   nn_stocklist = __NTIMESTEP__ ! List of timesteps when a restart file is to be written
    ln_mskland  = .true.   !  mask land points in NetCDF outputs (costly: + ~15%)
    nn_stock    =     960   !  frequency of creation of a restart file (modulo referenced to 1)
    nn_write    =      60   !  frequency of write in the output file   (modulo referenced to nn_it000)
