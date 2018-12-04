@@ -5,13 +5,51 @@
 
 
 #-----------------------------------------------------------------------------
-# user input
+# parse user input
 
+# YEAR=2016
+# MONTH=06
+# PARENT_JOB=
 
-YEAR=2016
-MONTH=06
+while getopts ":y:m:p:h" opt; do
+  case $opt in
+    h )
+      echo "Usage:"
+      echo "    pip -h                         Display this help message."
+      echo "    pip -y 2018 -m 03              Run month 2018-03"
+      echo "    pip ...  -p 123456             Add job dependency. Job starts"
+      echo "                                   when parent job has finished."
+      exit 0
+      ;;
+    y)
+      YEAR=$OPTARG
+      ;;
+    m)
+      MONTH=$OPTARG
+      ;;
+    p)
+      PARENT_JOB=$OPTARG
+      ;;
+    \? )
+      echo "Invalid Option: -$OPTARG" 1>&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
 
-PARENT_JOB=
+if [ -z "$YEAR" ]; then
+    echo "Invalid Option: YEAR must be given" 1>&2
+    exit 1
+fi
+
+if [ -z "$MONTH" ]; then
+    echo "Invalid Option: MONTH must be given" 1>&2
+    exit 1
+fi
 
 source env_path.sh
 
