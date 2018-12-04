@@ -8,15 +8,13 @@
 # user input
 
 
-# RUN_ROOT_DIR=..
-RUN_ROOT_DIR=../..
-
 YEAR=2016
 MONTH=06
 
-CFG_TEMPLATE_DIR=$RUN_ROOT_DIR/run_template
-
 RESTART=".false."
+PARENT_JOB=
+
+source env_path.sh
 
 #-----------------------------------------------------------------------------
 # parameters
