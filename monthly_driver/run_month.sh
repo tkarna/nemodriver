@@ -11,12 +11,16 @@
 # MONTH=06
 # PARENT_JOB=
 
-while getopts ":s:p:h" opt; do
+PARENT_JOB=''
+RESTART=".false."
+
+while getopts ":s:p:rh" opt; do
   case $opt in
     h )
       echo "Usage:"
       echo "    pip -h                         Display this help message."
       echo "    pip -s 2018-03                 Run month 2018-03"
+      echo "    pip -r                         Restart from previous month"
       echo "    pip ...  -p 123456             Add job dependency. Job starts"
       echo "                                   when parent job has finished."
       exit 0
@@ -26,6 +30,9 @@ while getopts ":s:p:h" opt; do
       ;;
     p)
       PARENT_JOB=$OPTARG
+      ;;
+    r)
+      RESTART=".true."
       ;;
     \? )
       echo "Invalid Option: -$OPTARG" 1>&2
@@ -56,6 +63,8 @@ if [ ${#MONTH} -ne "2" ]; then
     exit 1
 fi
 
+echo $RESTART
+
 source env_path.sh
 
 #-----------------------------------------------------------------------------
@@ -65,12 +74,6 @@ START_DATE=$(date +"%Y%m%d" -d "$YEAR-$MONTH-01")
 END_DATE=$(date +"%Y%m%d" -d "$YEAR-$MONTH-01 + 1 month")
 
 CUR_DIR=$(pwd)
-
-if [ -z "$PARENT_JOB" ]; then
-    RESTART=".false."
-else
-    RESTART=".true."
-fi
 
 #-----------------------------------------------------------------------------
 # generate rundir
