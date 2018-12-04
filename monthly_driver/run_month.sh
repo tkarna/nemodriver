@@ -11,7 +11,6 @@
 YEAR=2016
 MONTH=06
 
-RESTART=".false."
 PARENT_JOB=
 
 source env_path.sh
@@ -23,6 +22,12 @@ START_DATE=$(date +"%Y%m%d" -d "$YEAR-$MONTH-01")
 END_DATE=$(date +"%Y%m%d" -d "$YEAR-$MONTH-01 + 1 month")
 
 CUR_DIR=$(pwd)
+
+if [ -z "$PARENT_JOB" ]; then
+    RESTART=".false."
+else
+    RESTART=".true."
+fi
 
 #-----------------------------------------------------------------------------
 # generate rundir
@@ -93,7 +98,16 @@ cd $RUN_DIR
 
 sed -i "s|nemo4run|nemo${YEAR}${MONTH}|g" $JOB_SCRIPT
 
-id=$(qsub $JOB_SCRIPT)
+if [ -z "$PARENT_JOB" ]; then
+    DEP_STR=''
+else
+    echo "Jobs starts after parent job: $PARENT_JOB"
+    DEP_STR="-W depend=afterok:${PARENT_JOB}"
+fi
+
+QCMD="qsub $JOB_SCRIPT $DEP_STR"
+echo $QCMD
+id=$($QCMD)
 JOB_ID=${id%.*}
 echo "parsed job id: $JOB_ID"
 
