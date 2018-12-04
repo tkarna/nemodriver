@@ -170,7 +170,7 @@ else
     DEP_STR="-W depend=afterok:${PARENT_JOB}"
 fi
 
-QCMD="qsub $JOB_SCRIPT $DEP_STR"
+QCMD="qsub $DEP_STR $JOB_SCRIPT"
 echo $QCMD
 id=$($QCMD)
 JOB_ID=${id%.*}
