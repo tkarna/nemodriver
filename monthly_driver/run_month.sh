@@ -116,6 +116,21 @@ ln -s xios*.exe xios.exe
 cd $CUR_DIR
 
 #-----------------------------------------------------------------------------
+# link restart files
+
+if [ "${RESTART}" == ".true." ]; then
+    # figure out previous month run directory
+    PREV_YEARMONTH=$(date +"%Y-%m" -d "$START_DATE - 1 month")
+    PREV_RUN_DIR=$RUN_ROOT_DIR/run_$PREV_YEARMONTH
+    RESTART_SRC_DIR=$PREV_RUN_DIR/output/restarts
+    # new restart directory
+    RESTART_DIR=$RUN_DIR/initialstate
+    mkdir -p $RESTART_DIR
+    python link_restart_files.py $RESTART_SRC_DIR $RESTART_DIR restart_out restart_in
+    python link_restart_files.py $RESTART_SRC_DIR $RESTART_DIR restart_ice_out restart_ice_in
+fi
+
+#-----------------------------------------------------------------------------
 # generate namelists
 
 NAMELIST_DIR="../template/namelist/"
