@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#PBS -N nemo4run
+#PBS -q workq
+#PBS -l mppwidth=196
+#PBS -l mppnppn=28
+#PBS -l mppdepth=1
+#PBS -l walltime=96:00:00
+#PBS -j oe
+#PBS -W umask=022
+
+set -ue
+
+echo "Run begins at" $(date "+%Y-%m-%d %H:%M:%S")
+
+# run in current directory (where qsub was invoked)
+cd $PBS_O_WORKDIR
+
+xios=./xios.exe
+xios_numcpus=2
+nemo=./nemo.exe
+nemo_numcpus=193
+
+time aprun -n $nemo_numcpus $nemo 1>stdout.log 2>stderr.log
