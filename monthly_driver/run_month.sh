@@ -63,8 +63,6 @@ if [ ${#MONTH} -ne "2" ]; then
     exit 1
 fi
 
-echo $RESTART
-
 source env_path.sh
 
 #-----------------------------------------------------------------------------
@@ -118,16 +116,21 @@ cd $CUR_DIR
 #-----------------------------------------------------------------------------
 # link restart files
 
-if [ "${RESTART}" == ".true." ]; then
+if [ "$RESTART" == ".true." ]; then
+    echo "Adding restart link generation to $RUN_DIR/$JOB_SCRIPT"
+    cp link_restart_files.py $RUN_DIR
     # figure out previous month run directory
     PREV_YEARMONTH=$(date +"%Y-%m" -d "$START_DATE - 1 month")
     PREV_RUN_DIR=$RUN_ROOT_DIR/run_$PREV_YEARMONTH
     RESTART_SRC_DIR=$PREV_RUN_DIR/output/restarts
     # new restart directory
-    RESTART_DIR=$RUN_DIR/initialstate
-    mkdir -p $RESTART_DIR
-    python link_restart_files.py $RESTART_SRC_DIR $RESTART_DIR restart_out restart_in
-    python link_restart_files.py $RESTART_SRC_DIR $RESTART_DIR restart_ice_out restart_ice_in
+    RESTART_DIR=./initialstate
+    # add restart file link generation to job script
+    mkdir -p $RUN_DIR/$RESTART_DIR
+    LINK_CMD="# link restart files\n\
+python link_restart_files.py $RESTART_SRC_DIR $RESTART_DIR restart_out restart_in\n\
+python link_restart_files.py $RESTART_SRC_DIR $RESTART_DIR restart_ice_out restart_ice_in"
+    sed -i "s|#__LINK_RESTART_CMD__|${LINK_CMD}|g" $RUN_DIR/$JOB_SCRIPT
 fi
 
 #-----------------------------------------------------------------------------
@@ -181,4 +184,3 @@ echo "parsed job id: $JOB_ID"
 
 cd $CUR_DIR
 echo $JOB_ID > last_job_id.txt
-

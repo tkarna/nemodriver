@@ -15,6 +15,8 @@ echo "Run begins at" $(date "+%Y-%m-%d %H:%M:%S")
 # run in current directory (where qsub was invoked)
 cd $PBS_O_WORKDIR
 
+#__LINK_RESTART_CMD__
+
 xios=./xios.exe
 xios_numcpus=2
 nemo=./nemo.exe
