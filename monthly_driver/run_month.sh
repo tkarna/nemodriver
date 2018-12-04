@@ -7,11 +7,14 @@
 #-----------------------------------------------------------------------------
 # user input
 
-RUN_ROOT_DIR=../test/
+
+# RUN_ROOT_DIR=../test/
+RUN_ROOT_DIR=../..
+
 YEAR=2016
 MONTH=06
 
-TEMPLATE_DIR=../forcing_files
+CFG_TEMPLATE_DIR=$RUN_ROOT_DIR/run_template
 
 RESTART=".false."
 
@@ -26,8 +29,8 @@ CUR_DIR=$(pwd)
 #-----------------------------------------------------------------------------
 # generate rundir
 
-if [ ! -d "$TEMPLATE_DIR" ]; then
-  echo "ERROR: TEMPLATE_DIR not found: $TEMPLATE_DIR"
+if [ ! -d "$CFG_TEMPLATE_DIR" ]; then
+  echo "ERROR: CFG_TEMPLATE_DIR not found: $CFG_TEMPLATE_DIR"
   exit -1
 fi
 
@@ -38,7 +41,7 @@ echo "Copying setup to $RUN_DIR"
 mkdir -p $RUN_DIR
 
 
-for f in $(ls $TEMPLATE_DIR/*); do
+for f in $(ls $CFG_TEMPLATE_DIR/*); do
     echo "Copy $f"
     cp $f $RUN_DIR
 done
