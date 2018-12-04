@@ -17,13 +17,13 @@ while [ "$current_date" != "$check_date" ]; do
     # ------------------------------------------------------------------
     LOGFILE=log_setup_${year}-${month}.txt
     if [ "$current_date" == "$init_date" ]; then
-        CMD="./run_month.sh -s ${year}-${month} >& $LOGFILE"
+        CMD="./run_month.sh -s ${year}-${month}"
     else
         PARENT_ID=$(cat last_job_id.txt)
-        CMD="./run_month.sh -s ${year}-${month} -r -p $PARENT_ID >& $LOGFILE"
+        CMD="./run_month.sh -s ${year}-${month} -r -p $PARENT_ID"
     fi
     echo $CMD
-    $CMD
+    $CMD &> $LOGFILE
 
     # ------------------------------------------------------------------
     # increment date
