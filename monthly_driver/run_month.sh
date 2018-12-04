@@ -79,6 +79,8 @@ done
 
 # compute number of time steps
 cp compute_ntimestep.py $RUN_DIR
+cp nemo_duration.py $RUN_DIR
+
 cd $RUN_DIR
 NTIMESTEP=$(python compute_ntimestep.py $START_DATE $END_DATE)
 echo "Start date: $START_DATE"
