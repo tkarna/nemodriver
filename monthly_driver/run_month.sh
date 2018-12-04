@@ -8,7 +8,7 @@
 # user input
 
 
-# RUN_ROOT_DIR=../test/
+# RUN_ROOT_DIR=..
 RUN_ROOT_DIR=../..
 
 YEAR=2016
@@ -29,21 +29,30 @@ CUR_DIR=$(pwd)
 #-----------------------------------------------------------------------------
 # generate rundir
 
+RUN_ROOT_DIR=$(realpath $RUN_ROOT_DIR)
+CFG_TEMPLATE_DIR=$(realpath $CFG_TEMPLATE_DIR)
+
 if [ ! -d "$CFG_TEMPLATE_DIR" ]; then
   echo "ERROR: CFG_TEMPLATE_DIR not found: $CFG_TEMPLATE_DIR"
   exit -1
 fi
 
-RUN_ROOT_DIR=$(realpath $RUN_ROOT_DIR)
-
 RUN_DIR=$RUN_ROOT_DIR/run_${YEAR}-${MONTH}
 echo "Copying setup to $RUN_DIR"
 mkdir -p $RUN_DIR
 
+REL_TEMPLATE_DIR=$(realpath --relative-to=$RUN_DIR $CFG_TEMPLATE_DIR)
 
-for f in $(ls $CFG_TEMPLATE_DIR/*); do
-    echo "Copy $f"
-    cp $f $RUN_DIR
+for fpath in $(ls $CFG_TEMPLATE_DIR/*); do
+    f=$(basename $fpath)
+    extension="${f##*.}"
+    if [ "$extension" = "nc" ]; then
+        echo "Link $f"
+        ln -s $REL_TEMPLATE_DIR/$f $RUN_DIR/$f
+    else
+        echo "Copy $f"
+        cp $fpath $RUN_DIR
+    fi
 done
 
 JOB_SCRIPT="job_nemo.pbs"
