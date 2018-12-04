@@ -82,7 +82,7 @@ RUN_ROOT_DIR=$(realpath $RUN_ROOT_DIR)
 CFG_TEMPLATE_DIR=$(realpath $CFG_TEMPLATE_DIR)
 
 if [ ! -d "$CFG_TEMPLATE_DIR" ]; then
-  echo "ERROR: CFG_TEMPLATE_DIR not found: $CFG_TEMPLATE_DIR"
+  echo "ERROR: CFG_TEMPLATE_DIR not found: $CFG_TEMPLATE_DIR" 1>&2
   exit -1
 fi
 
@@ -180,3 +180,5 @@ echo "parsed job id: $JOB_ID"
 # qsub -W depend=afterany:$JOB_ID $POSTPROC_SCRIPT
 
 cd $CUR_DIR
+echo $JOB_ID > last_job_id.txt
+
