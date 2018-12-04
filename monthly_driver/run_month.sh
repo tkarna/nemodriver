@@ -44,6 +44,8 @@ RUN_DIR=$RUN_ROOT_DIR/run_${YEAR}-${MONTH}
 echo "Copying setup to $RUN_DIR"
 mkdir -p $RUN_DIR
 
+mkdir -p $RUN_DIR/output/{data,logs,restarts}
+
 REL_TEMPLATE_DIR=$(realpath --relative-to=$RUN_DIR $CFG_TEMPLATE_DIR)
 
 for fpath in $(ls $CFG_TEMPLATE_DIR/*); do
