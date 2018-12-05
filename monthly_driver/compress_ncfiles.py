@@ -101,15 +101,22 @@ def process_args():
     parser.add_argument('-D', '--delete-source', action='store_true',
                         help='Delete source netCDF file once compression')
     parser.add_argument('-s', '--compression-options', metavar='OPT',
-                        default='-d1',
-                        help='netCDF compression options in a string. \
-                        E.g "-d1 -c x/12,y/12,deptht/56,time_counter/1"')
+                        default='d1',
+                        help='netCDF compression options in a string. NOTE: ' \
+                        'omit the minus signs and separate options with a' \
+                        ' colon. ' \
+                        'E.g "d1:cx/12,y/12,deptht/56,time_counter/1"')
     parser.add_argument('-v', '--verbosity', action='count', default=0,
                         help='increase output verbosity')
     args = parser.parse_args()
 
-    process_files(args.files, args.output_directory,
-                  args.compression_options, delete_src=args.delete_source,
+    # process compression options
+    opt = args.compression_options
+    words = opt.split(':')
+    comp_opt = ' '.join(['-' + w for w in words])
+
+    process_files(args.files, args.output_directory, comp_opt,
+                  delete_src=args.delete_source,
                   verbose=args.verbosity)
 
 

@@ -16,11 +16,11 @@ module load netcdf
 # run in current directory (where qsub was invoked)
 cd $PBS_O_WORKDIR
 
-COMP_OPT='-d1 -c x/12,y/12,deptht/56,time_counter/1'
+COMP_OPT='d1:cx/12,y/12,deptht/56,time_counter/1'
 
 grids=(grid_T grid_U grid_V grid_W)
 for g in "${grids[@]}"; do
-    cmd="python compress_ncfiles.py -vv -D -s \'$COMP_OPT\' output NORDIC_*${g}*.nc"
+    cmd="python compress_ncfiles.py -vv -D -s $COMP_OPT output NORDIC_*${g}*.nc"
     echo $cmd
     $cmd &> log_postproc_${g}.txt &
 done
