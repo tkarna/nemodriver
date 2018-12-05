@@ -73,6 +73,8 @@ END_DATE=$(date +"%Y%m%d" -d "$YEAR-$MONTH-01 + 1 month")
 
 CUR_DIR=$(pwd)
 
+RUNDIR_PREFIX='run'
+
 #-----------------------------------------------------------------------------
 # generate rundir
 
@@ -84,7 +86,7 @@ if [ ! -d "$CFG_TEMPLATE_DIR" ]; then
   exit -1
 fi
 
-RUN_DIR=$RUN_ROOT_DIR/run_${YEAR}-${MONTH}
+RUN_DIR=$RUN_ROOT_DIR/${RUNDIR_PREFIX}_${YEAR}-${MONTH}
 echo "Copying setup to $RUN_DIR"
 mkdir -p $RUN_DIR
 
@@ -130,7 +132,7 @@ if [ "$RESTART" == ".true." ]; then
     cp link_restart_files.py $RUN_DIR
     # figure out previous month run directory
     PREV_YEARMONTH=$(date +"%Y-%m" -d "$START_DATE - 1 month")
-    PREV_RUN_DIR=$RUN_ROOT_DIR/run_$PREV_YEARMONTH
+    PREV_RUN_DIR=$RUN_ROOT_DIR/${RUNDIR_PREFIX}_$PREV_YEARMONTH
     RESTART_SRC_DIR=$PREV_RUN_DIR/output/restarts
     # new restart directory
     RESTART_DIR=./initialstate
