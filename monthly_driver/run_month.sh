@@ -108,6 +108,15 @@ JOB_SCRIPT="job_nemo.pbs"
 echo "Copy $JOB_SCRIPT"
 cp $JOB_SCRIPT $RUN_DIR
 
+POSTPROC_SCRIPT="job_postproc.pbs"
+echo "Copy $POSTPROC_SCRIPT"
+cp $POSTPROC_SCRIPT $RUN_DIR
+
+# copy utilities
+cp compute_ntimestep.py $RUN_DIR
+cp nemo_duration.py $RUN_DIR
+cp compress_ncfiles.py $RUN_DIR
+
 cd $RUN_DIR
 ln -s nemo*.exe nemo.exe
 ln -s xios*.exe xios.exe
@@ -144,9 +153,6 @@ for f in $(ls $NAMELIST_DIR/*); do
 done
 
 # compute number of time steps
-cp compute_ntimestep.py $RUN_DIR
-cp nemo_duration.py $RUN_DIR
-
 cd $RUN_DIR
 NTIMESTEP=$(python compute_ntimestep.py $START_DATE $END_DATE)
 echo "Start date: $START_DATE"
@@ -179,8 +185,10 @@ id=$($QCMD)
 JOB_ID=${id%.*}
 echo "parsed job id: $JOB_ID"
 
-# submit post-proc as a dependency
-# qsub -W depend=afterany:$JOB_ID $POSTPROC_SCRIPT
+sed -i "s|postproc|proc${YEAR}${MONTH}|g" $POSTPROC_SCRIPT
+
+# submit post-proc job as a dependency
+qsub -W depend=afterok:$JOB_ID $POSTPROC_SCRIPT
 
 cd $CUR_DIR
 echo $JOB_ID > last_job_id.txt

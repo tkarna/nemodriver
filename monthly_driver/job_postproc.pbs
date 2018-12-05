@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#PBS -N postproc
+#PBS -q workq
+#PBS -l mppwidth=4
+#PBS -l mppnppn=4
+#PBS -l mppdepth=1
+#PBS -l walltime=12:00:00
+#PBS -j oe
+#PBS -W umask=022
+
+set -ue
+
+module load Python
+module load netcdf
+
+# run in current directory (where qsub was invoked)
+cd $PBS_O_WORKDIR
+
+COMP_OPT='-d1 -c x/12,y/12,deptht/56,time_counter/1'
+
+grids=(grid_T grid_U grid_V grid_W)
+for g in "${grids[@]}"; do
+    cmd="python compress_ncfiles.py -vv -D -s \'$COMP_OPT\' output NORDIC_*${g}*.nc"
+    echo $cmd
+    $cmd &> log_postproc_${g}.txt &
+done
+
+wait
+
