@@ -306,18 +306,8 @@
    ln_traldf_lap   = .true.    !    laplacian operator
    ln_traldf_iso   = .true.    !  iso-neutral (standard operator)
    !                       !  Coefficients:
-   nn_aht_ijk_t    = 0         !  space/time variation of eddy coefficient:
+   nn_aht_ijk_t    = -30       !  space/time variation of eddy coefficient:
       !                             !   =-20 (=-30)    read in eddy_diffusivity_2D.nc (..._3D.nc) file
-      !                             !   =  0           constant
-      !                             !   = 10 F(k)      =ldf_c1d
-      !                             !   = 20 F(i,j)    =ldf_c2d
-      !                             !   = 21 F(i,j,t)  =Treguier et al. JPO 1997 formulation
-      !                             !   = 30 F(i,j,k)  =ldf_c2d * ldf_c1d
-      !                             !   = 31 F(i,j,k,t)=F(local velocity and grid-spacing)
-      !                        !  time invariant coefficients:  aht0 = 1/2  Ud*Ld   (lap case)
-      !                             !                           or   = 1/12 Ud*Ld^3 (blp case)
-      rn_Ud        = 0.01           !  lateral diffusive velocity [m/s] (nn_aht_ijk_t= 0, 10, 20, 30)
-      rn_Ld        = 200.           !  lateral diffusive length   [m]   (nn_aht_ijk_t= 0, 10)
 /
 !!======================================================================
 !!                      ***  Dynamics namelists  ***                  !!
@@ -362,7 +352,9 @@
 !-----------------------------------------------------------------------
    ln_dynldf_lap = .true.      !    laplacian operator
    ln_dynldf_hor = .true.     !  horizontal  (geopotential)
-    ! FIXME check what the horizontal diffusion setup is. Just constant 40 m2/s?
+   !                       !  Coefficient
+   nn_ahm_ijk_t  = -30           !  space/time variation of eddy coefficient :
+      !                             !  =-30  read in eddy_viscosity_3D.nc file
 /
 !!======================================================================
 !!                     vertical physics namelists                     !!
