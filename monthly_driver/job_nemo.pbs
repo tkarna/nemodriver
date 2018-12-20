@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #PBS -N nemo4run
 #PBS -q workq
-#PBS -l mppwidth=196
+#PBS -l mppwidth=336
 #PBS -l mppnppn=28
 #PBS -l mppdepth=1
 #PBS -l walltime=24:00:00
@@ -20,6 +20,6 @@ cd $PBS_O_WORKDIR
 xios=./xios.exe
 xios_numcpus=2
 nemo=./nemo.exe
-nemo_numcpus=187
+nemo_numcpus=318
 
 time aprun -n $nemo_numcpus $nemo 1>stdout.log 2>stderr.log
