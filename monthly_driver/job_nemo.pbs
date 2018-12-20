@@ -18,8 +18,10 @@ cd $PBS_O_WORKDIR
 #__LINK_RESTART_CMD__
 
 xios=./xios.exe
-xios_numcpus=2
+xios_nproc=2
 nemo=./nemo.exe
-nemo_numcpus=318
+nemo_nproc=318
 
-time aprun -n $nemo_numcpus $nemo 1>stdout.log 2>stderr.log
+time aprun -n $nemo_nproc $nemo : -n $xios_nproc $xios 1>stdout.log 2>stderr.log
+
+# time aprun -n $nemo_nproc $nemo 1>stdout.log 2>stderr.log
