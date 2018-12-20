@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #PBS -N nemo4run
 #PBS -q workq
-#PBS -l mppwidth=336
+#PBS -l mppwidth=196
 #PBS -l mppnppn=28
 #PBS -l mppdepth=1
 #PBS -l walltime=24:00:00
@@ -20,8 +20,6 @@ cd $PBS_O_WORKDIR
 xios=./xios.exe
 xios_nproc=2
 nemo=./nemo.exe
-nemo_nproc=318
+nemo_nproc=187
 
-time aprun -n $nemo_nproc $nemo : -n $xios_nproc $xios 1>stdout.log 2>stderr.log
-
-# time aprun -n $nemo_nproc $nemo 1>stdout.log 2>stderr.log
+time aprun -n $nemo_nproc $nemo 1>stdout.log 2>stderr.log

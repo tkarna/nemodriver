@@ -431,9 +431,9 @@
 !-----------------------------------------------------------------------
 &nammpp        !   Massively Parallel Processing                        ("key_mpp_mpi")
 !-----------------------------------------------------------------------
-   jpni        =  32 ! 30      !  jpni   number of processors following i (set automatically if < 1)
-   jpnj        =  27 ! 27      !  jpnj   number of processors following j (set automatically if < 1)
-   jpnij       =  318 ! 306     !  jpnij  number of local domains (set automatically if < 1)
+   jpni        =  23 ! 30      !  jpni   number of processors following i (set automatically if < 1)
+   jpnj        =  20 ! 27      !  jpnj   number of processors following j (set automatically if < 1)
+   jpnij       =  187 ! 306     !  jpnij  number of local domains (set automatically if < 1)
 /
 !-----------------------------------------------------------------------
 &namctl        !   Control prints                                       (default: OFF)
