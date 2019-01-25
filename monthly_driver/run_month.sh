@@ -79,6 +79,7 @@ RUNDIR_PREFIX='run'
 # generate rundir
 
 RUN_ROOT_DIR=$(realpath $RUN_ROOT_DIR)
+mkdir -p $RUN_ROOT_DIR
 CFG_TEMPLATE_DIR=$(realpath $CFG_TEMPLATE_DIR)
 
 if [ ! -d "$CFG_TEMPLATE_DIR" ]; then
