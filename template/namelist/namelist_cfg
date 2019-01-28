@@ -137,7 +137,7 @@
    sn_rnf = 'runoff_1d_1nm_nomask_noleap',        24         , 'sorunoff',   .true.    , .true. , 'yearly'  , ''               , ''       , ''
    sn_cnf      = 'river_data'            ,        -1         , 'socoefr' ,   .true.    , .true. , 'yearly'  , ''               , ''       , ''
    sn_s_rnf    = 'river_data'            ,        -1         , 'rosaline',   .true.    , .true. , 'yearly'  , ''               , ''       , ''
-   sn_t_rnf    = 'river_data_T'          ,        -1         , 'badtemp' ,   .true.    , .true. , 'yearly'  , ''               , ''       , ''
+   sn_t_rnf    = 'river_data_T2'         ,        -1         , 'temperature' ,   .true.    , .true. , 'yearly'  , ''               , ''       , ''
    sn_dep_rnf  = 'river_data'            ,        -1         , 'rodepth' ,   .true.    , .true. , 'yearly'  , ''               , ''       , ''
 /
 !-----------------------------------------------------------------------
