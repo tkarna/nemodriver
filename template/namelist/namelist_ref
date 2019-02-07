@@ -115,12 +115,14 @@
    ln_wd_il    = .false    !  T/F activation of iterative   limiter
    ln_wd_dl    = .false.   !  T/F activation of directional limiter
    ln_wd_dl_bc = .false.   !  T/F Directional limiteer Baroclinic option
-   ln_wd_dl_rmp = .false.   !  T/F Turn on directional limiter ramp
+   ln_wd_dl_rmp = .false.  !  T/F Turn on directional limiter ramp
    rn_wdmin0   =  0.30     !  depth at which WaD starts
    rn_wdmin1   =  0.2      !  Minimum wet depth on dried cells
    rn_wdmin2   =  0.0001   !  Tolerance of min wet depth on dried cells
    rn_wdld     =  2.5      !  Land elevation below which WaD is allowed
    nn_wdit     =   20      !  Max iterations for WaD limiter
+   rn_wd_sbcdep =  5.0     !  Depth at which to taper sbc fluxes
+   rn_wd_sbcfra =  0.999   !  Fraction of SBC fluxes at taper depth (Must be <1)
 /
 !-----------------------------------------------------------------------
 &namcrs        !   coarsened grid (for outputs and/or TOP)              (ln_crs =T)
@@ -480,16 +482,16 @@
    !___________!_________________________!___________________!___________!_____________!________!___________!__________________!__________!_______________!
    !           !  file name              ! frequency (hours) ! variable  ! time interp.!  clim  ! 'yearly'/ ! weights filename ! rotation ! land/sea mask !
    !           !                         !  (if <0  months)  !   name    !   (logical) !  (T/F) ! 'monthly' !                  ! pairing  !    filename   !
-   sn_cdg      =  'sdw_wave'             ,        1          , 'drag_coeff' ,  .true.  , .false., 'daily'   ,  ''             , ''       , ''
-   sn_usd      =  'sdw_wave'             ,        1          , 'u_sd2d'     ,  .true.  , .false., 'daily'   ,  ''             , ''       , ''
-   sn_vsd      =  'sdw_wave'             ,        1          , 'v_sd2d'     ,  .true.  , .false., 'daily'   ,  ''             , ''       , ''
-   sn_hsw      =  'sdw_wave'             ,        1          , 'hs'         ,  .true.  , .false., 'daily'   ,  ''             , ''       , ''
-   sn_wmp      =  'sdw_wave'             ,        1          , 'wmp'        ,  .true.  , .false., 'daily'   ,  ''             , ''       , ''
-   sn_wfr      =  'sdw_wave'             ,        1          , 'wfr'        ,  .true.  , .false., 'daily'   ,  ''             , ''       , ''
-   sn_wnum     =  'sdw_wave'             ,        1          , 'wave_num'   ,  .true.  , .false., 'daily'   ,  ''             , ''       , ''
-   sn_tauwoc   =  'sdw_wave'             ,        1          , 'wave_stress',  .true.  , .false., 'daily'   ,  ''             , ''       , ''
-   sn_tauwx    =  'sdw_wave'             ,        1          , 'wave_stress',  .true.  , .false., 'daily'   ,  ''             , ''       , ''
-   sn_tauwy    =  'sdw_wave'             ,        1          , 'wave_stress',  .true.  , .false., 'daily'   ,  ''             , ''       , ''
+   sn_cdg      =  'sdw_ecwaves_orca2'    ,        6          , 'drag_coeff' ,  .true.  , .true. , 'yearly'  ,  ''              , ''       , ''
+   sn_usd      =  'sdw_ecwaves_orca2'    ,        6          , 'u_sd2d'     ,  .true.  , .true. , 'yearly'  ,  ''              , ''       , ''
+   sn_vsd      =  'sdw_ecwaves_orca2'    ,        6          , 'v_sd2d'     ,  .true.  , .true. , 'yearly'  ,  ''              , ''       , ''
+   sn_hsw      =  'sdw_ecwaves_orca2'    ,        6          , 'hs'         ,  .true.  , .true. , 'yearly'  ,  ''              , ''       , ''
+   sn_wmp      =  'sdw_ecwaves_orca2'    ,        6          , 'wmp'        ,  .true.  , .true. , 'yearly'  ,  ''              , ''       , ''
+   sn_wfr      =  'sdw_ecwaves_orca2'    ,        6          , 'wfr'        ,  .true.  , .true. , 'yearly'  ,  ''              , ''       , ''
+   sn_wnum     =  'sdw_ecwaves_orca2'    ,        6          , 'wave_num'   ,  .true.  , .true. , 'yearly'  ,  ''              , ''       , ''
+   sn_tauwoc   =  'sdw_ecwaves_orca2'    ,        6          , 'wave_stress',  .true.  , .true. , 'yearly'  ,  ''              , ''       , ''
+   sn_tauwx    =  'sdw_ecwaves_orca2'    ,        6          , 'wave_stress',  .true.  , .true. , 'yearly'  ,  ''              , ''       , ''
+   sn_tauwy    =  'sdw_ecwaves_orca2'    ,        6          , 'wave_stress',  .true.  , .true. , 'yearly'  ,  ''              , ''       , ''
 /
 !-----------------------------------------------------------------------
 &namberg       !   iceberg parameters                                   (default: OFF)
@@ -498,7 +500,7 @@
    !
    !                          ! diagnostics:
    ln_bergdia        = .true.       ! Calculate budgets
-   nn_verbose_level  = 1            ! Turn on more verbose output if level > 0
+   nn_verbose_level  = 0            ! Turn on more verbose output if level > 0
    nn_verbose_write  = 15           ! Timesteps between verbose messages
    nn_sample_rate    = 1            ! Timesteps between sampling for trajectory storage
    !
@@ -549,28 +551,6 @@
    !                       !  free slip  !   partial slip  !   no slip   ! strong slip
    rn_shlat    =  -9999.   !  shlat = 0  !  0 < shlat < 2  !  shlat = 2  !  2 < shlat
    ln_vorlat   = .false.   !  consistency of vorticity boundary condition with analytical Eqs.
-/
-!-----------------------------------------------------------------------
-&nam_tide      !   tide parameters                                      (default: OFF)
-!-----------------------------------------------------------------------
-   ln_tide     = .true.    ! Activate tides
-      ln_tide_pot   = .true.  !  use tidal potential forcing
-
-!   clname(1)     =   'Q1'   !  name of constituent
-!   clname(2)     =   'O1'
-!   clname(3)     =   'P1'
-!   clname(4)     =   'S1'
-!   clname(5)     =   'K1'
-!   clname(6)     =   '2N2'
-!   clname(7)     =   'MU2'
-!   clname(8)     =   'N2'
-!   clname(9)     =   'NU2'
-!   clname(10)    =   'M2'
-!   clname(11)    =   'L2'
-!   clname(12)    =   'T2'
-!   clname(13)    =   'S2'
-!   clname(14)    =   'K2'
-!   clname(15)    =   'M4'
 /
 !-----------------------------------------------------------------------
 &namagrif      !  AGRIF zoom                                            ("key_agrif")
@@ -993,6 +973,9 @@
 !-----------------------------------------------------------------------
 &namzdf        !   vertical physics manager                             (default: NO selection)
 !-----------------------------------------------------------------------
+   !                       ! adaptive-implicit vertical advection
+   ln_zad_Aimp = .false.      !  Courant number dependent scheme (Shchepetkin 2015)
+   !
    !                       ! type of vertical closure (required)
    ln_zdfcst   = .false.      !  constant mixing
    ln_zdfric   = .false.      !  local Richardson dependent formulation (T =>   fill namzdf_ric)
@@ -1313,15 +1296,25 @@
    cn_mpi_send =  'I'      !  mpi send/recieve type   ='S', 'B', or 'I' for standard send,
    !                       !  buffer blocking send or immediate non-blocking sends, resp.
    nn_buffer   =   0       !  size in bytes of exported buffer ('B' case), 0 no exportation
-   ln_nnogather =  .false.  !  activate code to avoid mpi_allgather use at the northfold
+   ln_nnogather =  .true.  !  activate code to avoid mpi_allgather use at the northfold
    jpni        =   0       !  jpni   number of processors following i (set automatically if < 1)
    jpnj        =   0       !  jpnj   number of processors following j (set automatically if < 1)
-   jpnij       =   0       !  jpnij  number of local domains (set automatically if < 1)
 /
 !-----------------------------------------------------------------------
 &namctl        !   Control prints                                       (default: OFF)
 !-----------------------------------------------------------------------
-   ln_ctl      = .false.   !  trends control print (expensive!)
+   ln_ctl = .FALSE.                 ! Toggle all report printing on/off (T/F); Ignored if sn_cfctl%l_config is T
+     sn_cfctl%l_config = .TRUE.     ! IF .true. then control which reports are written with the following
+       sn_cfctl%l_runstat = .FALSE. ! switches and which areas produce reports with the proc integer settings.
+       sn_cfctl%l_trcstat = .FALSE. ! The default settings for the proc integers should ensure
+       sn_cfctl%l_oceout  = .FALSE. ! that  all areas report.
+       sn_cfctl%l_layout  = .FALSE. !
+       sn_cfctl%l_mppout  = .FALSE. !
+       sn_cfctl%l_mpptop  = .FALSE. !
+       sn_cfctl%procmin   = 0       ! Minimum area number for reporting [default:0]
+       sn_cfctl%procmax   = 1000000 ! Maximum area number for reporting [default:1000000]
+       sn_cfctl%procincr  = 1       ! Increment for optional subsetting of areas [default:1]
+       sn_cfctl%ptimincr  = 1       ! Timestep increment for writing time step progress info
    nn_print    =    0      !  level of print (0 no extra print)
    nn_ictls    =    0      !  start i indice of control sum (use to compare mono versus
    nn_ictle    =    0      !  end   i indice of control sum        multi processor runs

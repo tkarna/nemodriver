@@ -215,7 +215,7 @@
    rn_time_dmp   =  1.        !  Damping time scale in days
    rn_time_dmp_out = 1.       !  Outflow damping time scale
    nn_rimwidth   = 1          !  width of the relaxation zone
-   ln_vol        = .true.     !  total volume correction (see nn_volctl parameter)
+   ln_vol        = .false.    !  total volume correction (see nn_volctl parameter)
    nn_volctl     =  1         !  = 0, the total water flux across open boundaries is zero
    nb_jpk_bdy    = -1         ! number of levels in the bdy data (set < 0 if consistent with planned run)
 /
@@ -431,9 +431,8 @@
 !-----------------------------------------------------------------------
 &nammpp        !   Massively Parallel Processing                        ("key_mpp_mpi")
 !-----------------------------------------------------------------------
-   jpni        =  23 ! 30      !  jpni   number of processors following i (set automatically if < 1)
-   jpnj        =  20 ! 27      !  jpnj   number of processors following j (set automatically if < 1)
-   jpnij       =  187 ! 306     !  jpnij  number of local domains (set automatically if < 1)
+   jpni        = -1         !  jpni   number of processors following i (set automatically if < 1)
+   jpnj        = -1         !  jpnj   number of processors following j (set automatically if < 1)
 /
 !-----------------------------------------------------------------------
 &namctl        !   Control prints                                       (default: OFF)
