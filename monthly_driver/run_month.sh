@@ -73,8 +73,6 @@ END_DATE=$(date +"%Y%m%d" -d "$YEAR-$MONTH-01 + 1 month")
 
 CUR_DIR=$(pwd)
 
-RUNDIR_PREFIX='run'
-
 #-----------------------------------------------------------------------------
 # generate rundir
 
