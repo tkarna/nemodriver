@@ -3,7 +3,7 @@
 #
 
 # root directory where all individual run dirs will be created
-RUNTAG=run004
+RUNTAG=run005
 RUN_ROOT_DIR=../../$RUNTAG
 
 # prefix to be used in run directory names, e.g. run_2016-06
