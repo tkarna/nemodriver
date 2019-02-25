@@ -91,7 +91,7 @@
    ln_wave     = __FLAG_WAVE__    !  Activate coupling with wave  (T => fill namsbc_wave)
    ln_cdgw     = __FLAG_WDRAG__   !  Neutral drag coefficient read from wave model (T => ln_wave=.true. & fill namsbc_wave)
    ln_sdw      = __FLAG_STOKES__   !  Read 2D Surf Stokes Drift & Computation of 3D stokes drift (T => ln_wave=.true. & fill namsbc_wave)
-   nn_sdrift   =  __FLAG_STOKES__        !  Parameterization for the calculation of 3D-Stokes drift from the surface Stokes drift
+   nn_sdrift   =  0        !  Parameterization for the calculation of 3D-Stokes drift from the surface Stokes drift
       !                    !   = 0 Breivik 2015 parameterization: v_z=v_0*[exp(2*k*z)/(1-8*k*z)]
       !                    !   = 1 Phillips:                      v_z=v_o*[exp(2*k*z)-beta*sqrt(-2*k*pi*z)*erfc(sqrt(-2*k*z))]
       !                    !   = 2 Phillips as (1) but using the wave frequency from a wave model

@@ -26,11 +26,11 @@ RUNDIR_PREFIX='run'
 CFG_TEMPLATE_DIR=$RUN_ROOT_DIR/../run_template
 
 # time span to execute, start date of first/last run
-start_date="2016-11-01"
+start_date="2016-12-01"
 end_date="2017-03-01"
 
 # cold/hot start date
-init_date="2016-11-01"
+init_date="2016-12-01"
 
 # hotstart option
 HOTSTART=1
