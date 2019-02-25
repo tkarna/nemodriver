@@ -213,7 +213,7 @@ if [ -z "$DRYRUN" ]; then
 
     # submit post-proc job as a dependency
     qsub -W depend=afterok:$JOB_ID $POSTPROC_SCRIPT
-    echo $JOB_ID > last_job_id.txt
+    echo $JOB_ID > $CUR_DIR/last_job_id.txt
 fi
 
 cd $CUR_DIR
