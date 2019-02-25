@@ -88,16 +88,16 @@
       !                    !  =2 or 3 automatically for SI3 or CICE    ("key_si3" or "key_cice")
       !                    !          except in AGRIF zoom where it has to be specified
 
-   ln_wave     = .true.    !  Activate coupling with wave  (T => fill namsbc_wave)
-   ln_cdgw     = .false.   !  Neutral drag coefficient read from wave model (T => ln_wave=.true. & fill namsbc_wave)
-   ln_sdw      = .false.   !  Read 2D Surf Stokes Drift & Computation of 3D stokes drift (T => ln_wave=.true. & fill namsbc_wave) 
-   nn_sdrift   =  0        !  Parameterization for the calculation of 3D-Stokes drift from the surface Stokes drift
+   ln_wave     = __FLAG_WAVE__    !  Activate coupling with wave  (T => fill namsbc_wave)
+   ln_cdgw     = __FLAG_WDRAG__   !  Neutral drag coefficient read from wave model (T => ln_wave=.true. & fill namsbc_wave)
+   ln_sdw      = __FLAG_STOKES__   !  Read 2D Surf Stokes Drift & Computation of 3D stokes drift (T => ln_wave=.true. & fill namsbc_wave)
+   nn_sdrift   =  __FLAG_STOKES__        !  Parameterization for the calculation of 3D-Stokes drift from the surface Stokes drift
       !                    !   = 0 Breivik 2015 parameterization: v_z=v_0*[exp(2*k*z)/(1-8*k*z)]
       !                    !   = 1 Phillips:                      v_z=v_o*[exp(2*k*z)-beta*sqrt(-2*k*pi*z)*erfc(sqrt(-2*k*z))]
       !                    !   = 2 Phillips as (1) but using the wave frequency from a wave model
-   ln_tauwoc   = .true.    !  Activate ocean stress modified by external wave induced stress (T => ln_wave=.true. & fill namsbc_wave)
-   ln_tauw     = .false.   !  Activate ocean stress components from wave model
-   ln_stcor    = .false.   !  Activate Stokes Coriolis term (T => ln_wave=.true. & ln_sdw=.true. & fill namsbc_wave)
+   ln_tauwoc   = __FLAG_NTAUW__    !  Activate ocean stress modified by external wave induced stress (T => ln_wave=.true. & fill namsbc_wave)
+   ln_tauw     = __FLAG_TAUW__   !  Activate ocean stress components from wave model
+   ln_stcor    = __FLAG_STOKES__   !  Activate Stokes Coriolis term (T => ln_wave=.true. & ln_sdw=.true. & fill namsbc_wave)
    nn_lsm      = 0         !  =0 land/sea mask for input fields is not applied (keep empty land/sea mask filename field) ,
                            !  =1:n number of iterations of land/sea mask application for input fields (fill land/sea mask filename field)
 /

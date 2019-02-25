@@ -3,15 +3,7 @@
 # Execute monthly runs in a sequence
 #
 
-# time span to execute, start date of first/last run
-start_date="2016-06-01"
-end_date="2018-06-01"
-
-# cold/hot start date
-init_date="2016-06-01"
-
-hotstart=1
-restart_src_dir=/lustre/tmp/karna/runs/bal-mfc/NemoNordic/reference/nemo4_2016-2018/run005/run_2016-11/output/restarts/
+source env_path.sh
 
 # ------------------------------------------------------------------
 
@@ -26,8 +18,8 @@ while [ "$current_date" != "$check_date" ]; do
     LOGFILE=log_setup_${year}-${month}.txt
     if [ "$current_date" == "$init_date" ]; then
         # lauch first run
-        if [ $hotstart = 1 ]; then
-            CMD="./run_month.sh -r -R $restart_src_dir -s ${year}-${month}"
+        if [ $HOTSTART = 1 ]; then
+            CMD="./run_month.sh -r -R $RESTART_SRC_DIR -s ${year}-${month}"
         else
             # coldstart
             CMD="./run_month.sh -s ${year}-${month}"
