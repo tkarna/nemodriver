@@ -14,16 +14,19 @@
 PARENT_JOB=''
 RESTART=".false."
 
-while getopts ":s:p:rdh" opt; do
+SCRIPTNAME=`basename "$0"`
+
+while getopts ":s:p:R:rdh" opt; do
   case $opt in
     h )
       echo "Usage:"
-      echo "    pip -h                         Display this help message."
-      echo "    pip -s 2018-03                 Run month 2018-03"
-      echo "    pip -r                         Restart from previous month"
-      echo "    pip -d                         Dry run, generate input files"
+      echo "    $SCRIPTNAME -h                         Display this help message."
+      echo "    $SCRIPTNAME -s 2018-03                 Run month 2018-03"
+      echo "    $SCRIPTNAME -r                         Restart from previous month"
+      echo "    $SCRIPTNAME -R path                    Set custom restart directory"
+      echo "    $SCRIPTNAME -d                         Dry run, generate input files"
       echo "                                   but do not start simulation."
-      echo "    pip ...  -p 123456             Add job dependency. Job starts"
+      echo "    $SCRIPTNAME ...  -p 123456             Add job dependency. Job starts"
       echo "                                   when parent job has finished."
       exit 0
       ;;
@@ -32,6 +35,9 @@ while getopts ":s:p:rdh" opt; do
       ;;
     p)
       PARENT_JOB=$OPTARG
+      ;;
+    R)
+      RESTART_SRC_DIR=$OPTARG
       ;;
     r)
       RESTART=".true."
@@ -137,7 +143,9 @@ if [ "$RESTART" == ".true." ]; then
     # figure out previous month run directory
     PREV_YEARMONTH=$(date +"%Y-%m" -d "$START_DATE - 1 month")
     PREV_RUN_DIR=$RUN_ROOT_DIR/${RUNDIR_PREFIX}_$PREV_YEARMONTH
-    RESTART_SRC_DIR=$PREV_RUN_DIR/output/restarts
+    if [ -z "RESTART_SRC_DIR" ]; then
+        RESTART_SRC_DIR=$PREV_RUN_DIR/output/restarts
+    fi
     # new restart directory
     RESTART_DIR=./initialstate
     # add restart file link generation to job script
