@@ -151,7 +151,7 @@ fi
 #-----------------------------------------------------------------------------
 # generate namelists
 
-NAMELIST_DIR="../template/$NMLCONFIG/namelist/"
+NAMELIST_DIR="../template/namelist/$NMLCONFIG/"
 
 for f in $(ls $NAMELIST_DIR/*); do
     echo "Copy $f"
