@@ -6,6 +6,9 @@
 RUNTAG=run005
 RUN_ROOT_DIR=../../$RUNTAG
 
+# choose which namelist template to use
+NMLCONFIG=master
+
 # prefix to be used in run directory names, e.g. run_2016-06
 RUNDIR_PREFIX='run'
 
