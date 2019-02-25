@@ -14,13 +14,15 @@
 PARENT_JOB=''
 RESTART=".false."
 
-while getopts ":s:p:rh" opt; do
+while getopts ":s:p:rdh" opt; do
   case $opt in
     h )
       echo "Usage:"
       echo "    pip -h                         Display this help message."
       echo "    pip -s 2018-03                 Run month 2018-03"
       echo "    pip -r                         Restart from previous month"
+      echo "    pip -d                         Dry run, generate input files"
+      echo "                                   but do not start simulation."
       echo "    pip ...  -p 123456             Add job dependency. Job starts"
       echo "                                   when parent job has finished."
       exit 0
@@ -33,6 +35,9 @@ while getopts ":s:p:rh" opt; do
       ;;
     r)
       RESTART=".true."
+      ;;
+    d)
+      DRYRUN=".true."
       ;;
     \? )
       echo "Invalid Option: -$OPTARG" 1>&2
@@ -180,16 +185,18 @@ else
     DEP_STR="-W depend=afterok:${PARENT_JOB}"
 fi
 
-QCMD="qsub $DEP_STR $JOB_SCRIPT"
-echo $QCMD
-id=$($QCMD)
-JOB_ID=${id%.*}
-echo "parsed job id: $JOB_ID"
-
 sed -i "s|postproc|proc${YEAR}${MONTH}|g" $POSTPROC_SCRIPT
 
-# submit post-proc job as a dependency
-qsub -W depend=afterok:$JOB_ID $POSTPROC_SCRIPT
+if [ -z "$DRYRUN" ]; then
+    QCMD="qsub $DEP_STR $JOB_SCRIPT"
+    echo $QCMD
+    id=$($QCMD)
+    JOB_ID=${id%.*}
+    echo "parsed job id: $JOB_ID"
+
+    # submit post-proc job as a dependency
+    qsub -W depend=afterok:$JOB_ID $POSTPROC_SCRIPT
+    echo $JOB_ID > last_job_id.txt
+fi
 
 cd $CUR_DIR
-echo $JOB_ID > last_job_id.txt
