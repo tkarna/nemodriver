@@ -175,8 +175,8 @@
    sn_wmp      =  'WAVE_nnordic_tmp'      ,        1          , 'tmp'       ,  .true.  , .false. , 'monthly'  ,  ''              , ''       , ''
    sn_wfr      =  'WAVE_nnordic_TpI'      ,        1          , 'TpI'       ,  .true.  , .false. , 'monthly'  ,  ''              , ''       , ''
    sn_tauwoc   =  'WAVE_nnordic_NWS'      ,        1          , 'NWS'       ,  .true.  , .false. , 'monthly'  ,  ''              , ''       , ''
-   sn_tauwx    =  'WAVE_nnordic_radsxx'   ,        1          , 'radsxx'    ,  .true.  , .false. , 'monthly'  ,  ''              , ''       , ''
-   sn_tauwy    =  'WAVE_nnordic_radsyy'   ,        1          , 'radsyy'    ,  .true.  , .false. , 'monthly'  ,  ''              , ''       , ''
+   sn_tauwx    =  'WAVE_nnordic_wforx'    ,        1          , 'wforx'     ,  .true.  , .false. , 'monthly'  ,  ''              , ''       , ''
+   sn_tauwy    =  'WAVE_nnordic_wfory'    ,        1          , 'wfory'     ,  .true.  , .false. , 'monthly'  ,  ''              , ''       , ''
    sn_wnum     =  ''                      ,        1          , 'wave_num'  ,  .true.  , .false. , 'monthly'  ,  ''              , ''       , ''
 /
 !!======================================================================
