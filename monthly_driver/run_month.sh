@@ -194,7 +194,11 @@ cd $CUR_DIR
 
 cd $RUN_DIR
 
-sed -i "s|nemo4run|nemo${YEAR}${MONTH}|g" $JOB_SCRIPT
+if [ -z "$RUNTAG" ]; then
+    RUNTAG="nemo"
+fi
+
+sed -i "s|nemo4run|${RUNTAG}-${YEAR}${MONTH}|g" $JOB_SCRIPT
 
 if [ -z "$PARENT_JOB" ]; then
     DEP_STR=''
@@ -203,7 +207,7 @@ else
     DEP_STR="-W depend=afterok:${PARENT_JOB}"
 fi
 
-sed -i "s|postproc|proc${YEAR}${MONTH}|g" $POSTPROC_SCRIPT
+sed -i "s|postproc|proc-${RUNTAG}-${YEAR}${MONTH}|g" $POSTPROC_SCRIPT
 
 if [ -z "$DRYRUN" ]; then
     QCMD="qsub $DEP_STR $JOB_SCRIPT"
