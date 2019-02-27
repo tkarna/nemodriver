@@ -34,4 +34,4 @@ init_date="2016-12-01"
 
 # hotstart option
 HOTSTART=1
-RESTART_SRC_DIR=/lustre/tmp/karna/runs/bal-mfc/NemoNordic/reference/nemo4_2016-2018/run005/run_2016-11/output/restarts/
+HOTSTART_DIR=/lustre/tmp/karna/runs/bal-mfc/NemoNordic/reference/nemo4_2016-2018/run005/run_2016-11/output/restarts/

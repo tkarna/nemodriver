@@ -5,6 +5,9 @@
 
 source env_path.sh
 
+# global run_month flags
+FGLAS=""
+
 # ------------------------------------------------------------------
 
 check_date=`date +"%Y-%m-%d" -d "$end_date + 1 month"`;
@@ -19,14 +22,14 @@ while [ "$current_date" != "$check_date" ]; do
     if [ "$current_date" == "$init_date" ]; then
         # lauch first run
         if [ $HOTSTART = 1 ]; then
-            CMD="./run_month.sh -r -R $RESTART_SRC_DIR -s ${year}-${month}"
+            CMD="./run_month.sh $FGLAS -r -R $HOTSTART_DIR -s ${year}-${month}"
         else
             # coldstart
-            CMD="./run_month.sh -s ${year}-${month}"
+            CMD="./run_month.sh $FGLAS -s ${year}-${month}"
         fi
     else
         PARENT_ID=$(cat last_job_id.txt)
-        CMD="./run_month.sh -s ${year}-${month} -r -p $PARENT_ID"
+        CMD="./run_month.sh $FGLAS -s ${year}-${month} -r -p $PARENT_ID"
     fi
     echo $CMD
     $CMD &> $LOGFILE

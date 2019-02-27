@@ -143,9 +143,10 @@ if [ "$RESTART" == ".true." ]; then
     # figure out previous month run directory
     PREV_YEARMONTH=$(date +"%Y-%m" -d "$START_DATE - 1 month")
     PREV_RUN_DIR=$RUN_ROOT_DIR/${RUNDIR_PREFIX}_$PREV_YEARMONTH
-    if [ -z "RESTART_SRC_DIR" ]; then
+    if [ -z "$RESTART_SRC_DIR" ]; then
         RESTART_SRC_DIR=$PREV_RUN_DIR/output/restarts
     fi
+    echo "Restart source dir $RESTART_SRC_DIR"
     # new restart directory
     RESTART_DIR=./initialstate
     # add restart file link generation to job script
