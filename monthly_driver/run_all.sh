@@ -27,6 +27,9 @@ while [ "$current_date" != "$check_date" ]; do
             # coldstart
             CMD="./run_month.sh $FGLAS -s ${year}-${month}"
         fi
+    elif [ "$current_date" == "$start_date" ]; then
+        # restart from prev month that is already finished
+        CMD="./run_month.sh $FGLAS -s ${year}-${month} -r"
     else
         PARENT_ID=$(cat last_job_id.txt)
         CMD="./run_month.sh $FGLAS -s ${year}-${month} -r -p $PARENT_ID"
