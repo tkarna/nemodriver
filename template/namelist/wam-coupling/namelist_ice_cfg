@@ -23,6 +23,8 @@
 !------------------------------------------------------------------------------
    jpl              =    5          !  number of ice  categories
    nlay_i           =    2          !  number of ice  layers
+   ln_icedyn        = .true.          !  ice dynamics (T) or not (F)
+   ln_icethd        = .true.          !  ice thermo   (T) or not (F)
    cn_icerst_in  = "restart_ice_in"      !  suffix of ice restart name (input)
    cn_icerst_indir = "initialstate/"     !  directory from which to read input ice restarts
    cn_icerst_out = "restart_ice_out"     !  suffix of ice restart name (output)
@@ -31,11 +33,12 @@
 !------------------------------------------------------------------------------
 &namitd         !   Ice discretization
 !------------------------------------------------------------------------------
+   rn_himin         =   0.10           !  minimum ice thickness (m) used in remapping
 /
 !------------------------------------------------------------------------------
 &namdyn         !   Ice dynamics
 !------------------------------------------------------------------------------
-   ln_landfast_L16  = .true.         !  landfast: parameterization from Lemieux 2016
+   ln_landfast_L16  = .false.         !  landfast: parameterization from Lemieux 2016
 /
 !------------------------------------------------------------------------------
 &namdyn_rdgrft  !   Ice ridging/rafting
@@ -70,6 +73,7 @@
 !------------------------------------------------------------------------------
 &namthd_do      !   Ice growth in open water
 !------------------------------------------------------------------------------
+   rn_hinew         =   0.10           !  thickness for new ice formation in open water (m), must be larger than rn_hnewice
 /
 !------------------------------------------------------------------------------
 &namthd_sal     !   Ice salinity
