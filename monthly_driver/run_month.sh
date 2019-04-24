@@ -179,13 +179,11 @@ sed -i "s|__INITDATE__|${START_DATE}|g" $NML_FILE
 sed -i "s|__NTIMESTEP__|${NTIMESTEP}|g" $NML_FILE
 sed -i "s|__RESTART__|${RESTART}|g" $NML_FILE
 
-if [ "$NMLCONFIG" = "wam-coupling" ]; then
-    sed -i "s|__FLAG_WAVE__|${FLAG_WAVE}|g" $NML_FILE
-    sed -i "s|__FLAG_WDRAG__|${FLAG_WDRAG}|g" $NML_FILE
-    sed -i "s|__FLAG_STOKES__|${FLAG_STOKES}|g" $NML_FILE
-    sed -i "s|__FLAG_NTAUW__|${FLAG_NTAUW}|g" $NML_FILE
-    sed -i "s|__FLAG_TAUW__|${FLAG_TAUW}|g" $NML_FILE
-fi
+sed -i "s|__FLAG_WAVE__|${FLAG_WAVE}|g" $NML_FILE
+sed -i "s|__FLAG_WDRAG__|${FLAG_WDRAG}|g" $NML_FILE
+sed -i "s|__FLAG_STOKES__|${FLAG_STOKES}|g" $NML_FILE
+sed -i "s|__FLAG_NTAUW__|${FLAG_NTAUW}|g" $NML_FILE
+sed -i "s|__FLAG_TAUW__|${FLAG_TAUW}|g" $NML_FILE
 
 cd $CUR_DIR
 
