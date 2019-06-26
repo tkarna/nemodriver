@@ -1,13 +1,25 @@
 """
-Create symlinks for NEMO restart files
+Create symlinks for NEMO restart files.
+
+Usage:
+python link_restart_files.py ../run00/restarts/ initialstate/ restart_out restart_in
+
 """
 import os
 import glob
 
-in_dir = 'output/restarts/'
-out_dir = 'tmp'
-input_name = 'restart_out'
-output_name = 'restart_in'
+
+def create_link(src, dst, force=False):
+    """
+    Create a symbolic link.
+
+    If force is True, the existing dst will be removed, if any.
+    """
+
+    if force and (os.path.isfile(dst) or os.path.islink(dst)):
+        os.remove(dst)
+    print('creating link: {:} -> {:}'.format(dst, src))
+    os.symlink(src, dst)
 
 
 def symlink_restart_files(in_dir, input_name, out_dir, output_name):
@@ -16,14 +28,28 @@ def symlink_restart_files(in_dir, input_name, out_dir, output_name):
 
     Will create symbolic links with a relative path.
 
+    If a single restart file, {out_dir}/{output_name}.nc exists, will link:
+    {out_dir}/{output_name}.nc -> {in_dir}/{input_name}.nc
+
+    Otherwise links local-by-process restart files:
     {out_dir}/{output_name}_0180.nc -> {in_dir}/NORDIC_00001920_{input_name}_0180.nc
 
     """
+    # check if single target restart file exists
+    a = os.path.join(in_dir, output_name + '.nc')
+    b = os.path.join(in_dir, input_name + '.nc')
+    for source in [a, b]:
+        if os.path.isfile(source) or os.path.islink(source):
+            link_name = os.path.join(out_dir, os.path.split(source)[1])
+            create_link(source, link_name, force=True)
+            return
 
     # find lastest file for proc 0
     # {in_dir}/*{in_name}*_0000.nc
     zero_pattern = os.path.join(in_dir, '*{:}*_0000.nc'.format(input_name))
-    last_zero_file = sorted(glob.glob(zero_pattern))[-1]
+    files = glob.glob(zero_pattern)
+    assert len(files) > 0, 'No files found: "{:}"'.format(zero_pattern)
+    last_zero_file = sorted(files)[-1]
 
     # seach pattern for the latest restart files
     # in_dir/NORDIC_00001920_restart_out_*.nc
@@ -44,8 +70,7 @@ def symlink_restart_files(in_dir, input_name, out_dir, output_name):
         rel_path = os.path.relpath(in_dir, out_dir)
         source = os.path.join(rel_path, f)
         link_name = os.path.join(out_dir, o)
-        print('creating link: {:} -> {:}'.format(link_name, source))
-        os.symlink(source, link_name)
+        create_link(source, link_name, force=True)
 
 
 if __name__ == '__main__':
