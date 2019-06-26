@@ -22,12 +22,12 @@ while getopts ":s:p:R:rdh" opt; do
       echo "Usage:"
       echo "    $SCRIPTNAME -h                         Display this help message."
       echo "    $SCRIPTNAME -s 2018-03                 Run month 2018-03"
-      echo "    $SCRIPTNAME -r                         Restart from previous month"
-      echo "    $SCRIPTNAME -R path                    Set custom restart directory"
-      echo "    $SCRIPTNAME -d                         Dry run, generate input files"
-      echo "                                   but do not start simulation."
-      echo "    $SCRIPTNAME ...  -p 123456             Add job dependency. Job starts"
-      echo "                                   when parent job has finished."
+      echo "    $SCRIPTNAME ... -r                     Restart from previous month"
+      echo "    $SCRIPTNAME ... -R path                Set custom restart directory"
+      echo "    $SCRIPTNAME ... -d                     Dry run, generate input files"
+      echo "                                            but do not start simulation."
+      echo "    $SCRIPTNAME ... -p 123456              Add job dependency. Job starts"
+      echo "                                            when parent job has finished."
       exit 0
       ;;
     s)
@@ -57,7 +57,8 @@ while getopts ":s:p:R:rdh" opt; do
 done
 
 if [ -z "$YEARMONTH" ]; then
-    echo "Invalid Option: YEAR-MONTH must be given" 1>&2
+    echo "Invalid Option: -s YEAR-MONTH must be given" 1>&2
+    $0 -h
     exit 1
 fi
 
@@ -66,11 +67,13 @@ MONTH=${YEARMONTH#*-}
 
 if [ ${#YEAR} -ne "4" ]; then
     echo "Invalid Option: could not parse YEAR: $YEAR" 1>&2
+    $0 -h
     exit 1
 fi
 
 if [ ${#MONTH} -ne "2" ]; then
     echo "Invalid Option: could not parse MONTH: $MONTH" 1>&2
+    $0 -h
     exit 1
 fi
 
@@ -104,7 +107,8 @@ mkdir -p $RUN_DIR/output/{data,logs,restarts}
 
 REL_TEMPLATE_DIR=$(realpath --relative-to=$RUN_DIR $CFG_TEMPLATE_DIR)
 
-for fpath in $(ls $CFG_TEMPLATE_DIR/*); do
+# copy/link files and symlinks from template dir
+for fpath in $(find $CFG_TEMPLATE_DIR/ -maxdepth 1 -xtype f); do
     f=$(basename $fpath)
     extension="${f##*.}"
     if [ "$extension" = "nc" ]; then
@@ -113,6 +117,15 @@ for fpath in $(ls $CFG_TEMPLATE_DIR/*); do
     else
         echo "Copy $f"
         cp $fpath $RUN_DIR
+    fi
+done
+
+# link template subdirectories
+for fpath in $(find $CFG_TEMPLATE_DIR/ -type d); do
+    f=$(basename $fpath)
+    if [ -e $REL_TEMPLATE_DIR/$f ]; then
+        echo "Link sub directory $f"
+        ln -s $REL_TEMPLATE_DIR/$f $RUN_DIR/$f
     fi
 done
 
