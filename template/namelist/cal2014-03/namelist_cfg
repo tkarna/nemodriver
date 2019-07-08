@@ -387,7 +387,7 @@
 &namzdf        !   vertical physics                                     (default: NO selection)
 !-----------------------------------------------------------------------
    ln_zdfgls   = .true.       !  Generic Length Scale closure           (T =>   fill namzdf_gls)
-   ln_zdfevd   = .true.       !  enhanced vertical diffusion
+   ln_zdfevd   = .false.      !  enhanced vertical diffusion
       nn_evdm     =    0         ! apply on tracer (=0) or on tracer and momentum (=1)
       rn_evd      =    1.        ! mixing coefficient [m2/s]
    rn_avm0     =   1.0e-6     !  vertical eddy viscosity   [m2/s]       (background Kz if ln_zdfcst=F)
