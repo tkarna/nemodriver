@@ -115,15 +115,15 @@
    !___________!_________________________!___________________!___________!_____________!________!___________!______________________________________!__________!_______________!
    !           !  file name              ! frequency (hours) ! variable  ! time interp.!  clim  ! 'yearly'/ !       weights filename               ! rotation ! land/sea mask !
    !           !                         !  (if <0  months)  !   name    !   (logical) !  (T/F) ! 'monthly' !                                      ! pairing  !    filename   !
-   sn_wndi     = 'era5_U10m'             ,              1    , 'U10m'    ,   .true.    , .false. , 'monthly' , 'ECMWF_weights_bicubic'   , '' , ''
-   sn_wndj     = 'era5_V10m'             ,              1    , 'V10m'    ,   .true.    , .false. , 'monthly' , 'ECMWF_weights_bicubic'   , '' , ''
-   sn_qsr      = 'era5_radsw'            ,              1    , 'radsw'   ,   .true.    , .false. , 'monthly' , 'ECMWF_weights_bilin'   , '' , ''
-   sn_qlw      = 'era5_radlw'            ,              1    , 'radlw'   ,   .true.    , .false. , 'monthly' , 'ECMWF_weights_bilin'   , '' , ''
-   sn_tair     = 'era5_T2m'              ,              1    , 'T2m'     ,   .true.    , .false. , 'monthly' , 'ECMWF_weights_bilin'   , '' , ''
-   sn_humi     = 'era5_Q2'               ,              1    , 'Q2'      ,   .true.    , .false. , 'monthly' , 'ECMWF_weights_bilin'   , '' , ''
-   sn_prec     = 'era5_precip'           ,              1    , 'precip'  ,   .true.    , .false. , 'monthly' , 'ECMWF_weights_bilin'   , '' , ''
-   sn_snow     = 'era5_snow'             ,              1    , 'snow'    ,   .true.    , .false. , 'monthly' , 'ECMWF_weights_bilin'   , '' , ''
-   sn_slp      = 'era5_sfcpres'          ,              1    , 'sfcpres' ,   .true.    , .false. , 'monthly' , 'ECMWF_weights_bilin'   , '' , ''
+   sn_wndi     = 'era5'                  ,              1    , 'u10'     ,   .true.    , .false. , 'monthly' , 'ECMWF_weights_bicubic'   , '' , ''
+   sn_wndj     = 'era5'                  ,              1    , 'v10'     ,   .true.    , .false. , 'monthly' , 'ECMWF_weights_bicubic'   , '' , ''
+   sn_qsr      = 'era5'                  ,              1    , 'deacc_ssrd'   ,   .true.    , .false. , 'monthly' , 'ECMWF_weights_bilin'   , '' , ''
+   sn_qlw      = 'era5'                  ,              1    , 'deacc_strd'   ,   .true.    , .false. , 'monthly' , 'ECMWF_weights_bilin'   , '' , ''
+   sn_tair     = 'era5'                  ,              1    , 't2m'     ,   .true.    , .false. , 'monthly' , 'ECMWF_weights_bilin'   , '' , ''
+   sn_humi     = 'era5'                  ,              1    , 'q2'      ,   .true.    , .false. , 'monthly' , 'ECMWF_weights_bilin'   , '' , ''
+   sn_prec     = 'era5'                  ,              1    , 'deacc_tp',   .true.    , .false. , 'monthly' , 'ECMWF_weights_bilin'   , '' , ''
+   sn_snow     = 'era5'                  ,              1    , 'deacc_sf',   .true.    , .false. , 'monthly' , 'ECMWF_weights_bilin'   , '' , ''
+   sn_slp      = 'era5'                  ,              1    , 'sp'      ,   .true.    , .false. , 'monthly' , 'ECMWF_weights_bilin'   , '' , ''
 /
 !-----------------------------------------------------------------------
 &namtra_qsr    !   penetrative solar radiation                          (ln_traqsr =T)
@@ -161,7 +161,7 @@
    !___________!_________________________!___________________!___________!_____________!________!___________!__________________!__________!_______________!
    !           !  file name              ! frequency (hours) ! variable  ! time interp.!  clim  ! 'yearly'/ ! weights filename ! rotation ! land/sea mask !
    !           !                         !  (if <0  months)  !   name    !   (logical) !  (T/F) ! 'monthly' !                  ! pairing  !    filename   !
-   sn_apr      = 'era5_sfcpres'          ,              1    , 'sfcpres'   ,   .true.    , .false., 'monthly'   , 'ECMWF_weights_bilin'   , '' , ''
+   sn_apr      = 'era5'                  ,              1    , 'sp'      ,   .true.    , .false., 'monthly' , 'ECMWF_weights_bilin'   , '' , ''
 /
 !!======================================================================
 !!               ***  Lateral boundary condition  ***                 !!
