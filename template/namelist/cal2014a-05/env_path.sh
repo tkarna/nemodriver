@@ -3,11 +3,11 @@
 #
 
 # root directory where all individual run dirs will be created
-RUNTAG=run4-02
+RUNTAG=run4-05
 RUN_ROOT_DIR=../../$RUNTAG
 
 # choose which namelist template to use
-NMLCONFIG=cal2014-02
+NMLCONFIG=cal2014a-05
 
 # config specific flags
 FLAG_WAVE=.false.
@@ -33,4 +33,4 @@ init_date="2014-10-01"
 
 # hotstart option
 HOTSTART=0
-HOTSTART_DIR=''
+HOTSTART_DIR=""

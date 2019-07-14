@@ -7,7 +7,7 @@ RUNTAG=run4-01
 RUN_ROOT_DIR=../../$RUNTAG
 
 # choose which namelist template to use
-NMLCONFIG=cal2014-01
+NMLCONFIG=cal2014a-01
 
 # config specific flags
 FLAG_WAVE=.false.

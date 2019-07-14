@@ -3,11 +3,11 @@
 #
 
 # root directory where all individual run dirs will be created
-RUNTAG=run4-03
+RUNTAG=run4-02
 RUN_ROOT_DIR=../../$RUNTAG
 
 # choose which namelist template to use
-NMLCONFIG=cal2014-03
+NMLCONFIG=cal2014a-02
 
 # config specific flags
 FLAG_WAVE=.false.
