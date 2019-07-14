@@ -3,11 +3,11 @@
 #
 
 # root directory where all individual run dirs will be created
-RUNTAG=run01
+RUNTAG=run02
 RUN_ROOT_DIR=../../$RUNTAG
 
 # choose which namelist template to use
-NMLCONFIG=cal2014-01
+NMLCONFIG=cal2014-02
 
 # config specific flags
 FLAG_WAVE=.false.
@@ -32,5 +32,5 @@ end_date="2015-03-01"
 init_date="2014-10-01"
 
 # hotstart option
-HOTSTART=1
-HOTSTART_DIR='/lustre/tmp/karna/runs/bal-mfc/NemoNordic/reference/smhi_cal_2014/init_state'
+HOTSTART=0
+HOTSTART_DIR=''
