@@ -3,11 +3,11 @@
 #
 
 # root directory where all individual run dirs will be created
-RUNTAG=logbf04
+RUNTAG=logbf02
 RUN_ROOT_DIR=../../$RUNTAG
 
 # choose which namelist template to use
-NMLCONFIG=cal2014-logbf-04
+NMLCONFIG=cal2014-logbf-02
 
 # config specific flags
 FLAG_WAVE=.false.
