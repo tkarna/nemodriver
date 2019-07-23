@@ -3,7 +3,7 @@
 #
 
 # root directory where all individual run dirs will be created
-RUNTAG=logbf10
+RUNTAG=logbf08
 RUN_ROOT_DIR=../../$RUNTAG
 
 # choose which namelist template to use
@@ -22,7 +22,7 @@ RUNDIR_PREFIX='run'
 # directory that contains all the necessary input files
 # - netcdf files, *.xml files, nemo xios binary files
 # NOTE: do not include namelist files here
-CFG_TEMPLATE_DIR=$RUN_ROOT_DIR/../run_template_logbf_05
+CFG_TEMPLATE_DIR=$RUN_ROOT_DIR/../run_template_logbf
 
 # time span to execute, start date of first/last run
 start_date="2014-12-01"
