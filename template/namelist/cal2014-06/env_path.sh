@@ -33,4 +33,4 @@ init_date="2014-10-01"
 
 # hotstart option
 HOTSTART=0
-HOTSTART_DIR='/lustre/tmp/karna/runs/bal-mfc/NemoNordic/reference/smhi_cal_2014/run03/run_2014-11/output/restarts/'
+HOTSTART_DIR=''
