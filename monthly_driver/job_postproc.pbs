@@ -16,6 +16,7 @@ module load netcdf
 # run in current directory (where qsub was invoked)
 cd $PBS_O_WORKDIR
 
+# compress output
 COMP_OPT='d1:cx/12,y/12,deptht/56,time_counter/1'
 
 grids=(grid_T grid_U grid_V grid_W)
@@ -27,3 +28,8 @@ done
 
 wait
 
+# extract transect
+RUNTAG=$(basename "$(pwd)")  # run_2016-10
+python extract_transect.py output/NORDIC_*_grid_T_*.nc domain_cfg.nc \
+    salinity transect_baltic-inflow_lonlat.txt \
+    output/transect_baltic-inflow_salinity_${RUNTAG/run_/}.nc

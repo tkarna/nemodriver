@@ -141,6 +141,8 @@ cp $POSTPROC_SCRIPT $RUN_DIR
 cp compute_ntimestep.py $RUN_DIR
 cp nemo_duration.py $RUN_DIR
 cp compress_ncfiles.py $RUN_DIR
+cp extract_transect.py $RUN_DIR
+cp transect_baltic-inflow_lonlat.txt $RUN_DIR
 
 cd $RUN_DIR
 ln -s nemo*.exe nemo.exe
