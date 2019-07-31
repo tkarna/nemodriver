@@ -30,6 +30,6 @@ wait
 
 # extract transect
 RUNTAG=$(basename "$(pwd)")  # run_2016-10
-python extract_transect.py output/NORDIC_*_grid_T_*.nc domain_cfg.nc \
+python extract_transect.py output/NORDIC_?h_grid_T_*.nc domain_cfg.nc \
     salinity transect_baltic-inflow_lonlat.txt \
     output/transect_baltic-inflow_salinity_${RUNTAG/run_/}.nc
