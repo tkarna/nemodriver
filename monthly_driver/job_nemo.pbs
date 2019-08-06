@@ -4,7 +4,7 @@
 #PBS -l mppwidth=364
 #PBS -l mppnppn=28
 #PBS -l mppdepth=1
-#PBS -l walltime=24:00:00
+#PBS -l walltime=07:00:00
 #PBS -j oe
 #PBS -W umask=022
 
