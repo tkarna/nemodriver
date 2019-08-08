@@ -5,6 +5,9 @@
 
 source env_path.sh
 
+echo "Run tag: " $RUNTAG
+echo "Run dir: " $(readlink -f $RUN_ROOT_DIR)
+
 # global run_month flags
 FGLAS=""
 
