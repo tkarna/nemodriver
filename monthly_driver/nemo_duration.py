@@ -96,7 +96,6 @@ def process(run_directory=None):
     # get sim start time
     start_time = get_file_mod_time(os.path.join(run_directory, 'layout.dat'))
 
-
     niters = parse_iteration_count(os.path.join(run_directory, 'time.step'))
     timestep = parse_timestep(run_dir=run_directory)
     tot_niter = parse_total_iter_count(run_dir=run_directory)
@@ -111,11 +110,13 @@ def process(run_directory=None):
     duration_sec = duration.total_seconds()
 
     running = time_changed < 3*60.0
+    finished = tot_niter == niters
 
+    status_str = 'Running' if running else 'STOPPED'
+    if finished:
+        status_str = 'Finished'
     print('Run started at {:}'.format(start_time))
-    print('Status: {:}'.format(
-        'Running' if running else 'STOPPED'
-    ))
+    print('Status: {:}'.format(status_str))
     if not running:
         print('  last update {:} ago'.format(
             datetime.timedelta(seconds=time_changed)))
