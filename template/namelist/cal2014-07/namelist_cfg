@@ -279,7 +279,8 @@
    rn_Cd0      =  2.5e-3   !  drag coefficient [-]
    rn_ke0      =  0.0      !  background kinetic energy  [m2/s2] (non-linear cases)
    rn_z0       =  0.0001   !  roughness [m] (ln_loglayer=T)
-   ln_boost    = .true.    !  =T regional boost of Cd0 ; =F constant
+   ln_z0_2d    = .true.    !  =T read 2d z0 field from bfr_roughness.nc; =F use rn_z0
+   ln_boost    = .false.   !  =T regional boost of Cd0 ; =F constant
       rn_boost =  1.       !  local boost factor  [-]
 /
 !-----------------------------------------------------------------------

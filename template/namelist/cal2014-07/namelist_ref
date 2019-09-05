@@ -667,6 +667,7 @@
    rn_Cdmax    =  0.1      !  drag value maximum [-] (logarithmic drag)
    rn_ke0      =  2.5e-3   !  background kinetic energy  [m2/s2] (non-linear cases)
    rn_z0       =  3.0e-3   !  roughness [m] (ln_loglayer=T)
+   ln_z0_2d    = .false.   !  =T read 2d z0 field from tfr_roughness.nc; =F use rn_z0
    ln_boost    = .false.   !  =T regional boost of Cd0 ; =F constant
       rn_boost =  50.         !  local boost factor  [-]
 /
@@ -678,6 +679,7 @@
    rn_Cdmax    =  0.1      !  drag value maximum [-] (logarithmic drag)
    rn_ke0      =  2.5e-3   !  background kinetic energy  [m2/s2] (non-linear cases)
    rn_z0       =  3.e-3    !  roughness [m] (ln_loglayer=T)
+   ln_z0_2d    = .false.   !  =T read 2d z0 field from bfr_roughness.nc; =F use rn_z0
    ln_boost    = .false.   !  =T regional boost of Cd0 ; =F constant
       rn_boost =  50.         !  local boost factor  [-]
 /
