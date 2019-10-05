@@ -188,7 +188,16 @@ NTIMESTEP=$(python compute_ntimestep.py $START_DATE $END_DATE)
 echo "Start date: $START_DATE"
 echo "end   date: $END_DATE"
 echo "Total time steps: $NTIMESTEP"
-NML_FILE=namelist_cfg
+
+if [ -z "$SINGLE_NML" ]; then
+    SINGLE_NML=false
+fi
+if [ "$SINGLE_NML" = true ]; then
+    NML_FILE=namelist_ref
+else
+    NML_FILE=namelist_cfg
+fi
+
 echo "Generating namelist $NML_FILE"
 sed -i "s|__INITDATE__|${START_DATE}|g" $NML_FILE
 sed -i "s|__NTIMESTEP__|${NTIMESTEP}|g" $NML_FILE

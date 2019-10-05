@@ -16,6 +16,9 @@ FLAG_STOKES=.false.
 FLAG_NTAUW=.false.
 FLAG_TAUW=.false.
 
+# modification to namelist_cfg or ref
+SINGLE_NML=false
+
 # prefix to be used in run directory names, e.g. run_2016-06
 RUNDIR_PREFIX='run'
 
