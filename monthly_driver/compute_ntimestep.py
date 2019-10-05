@@ -12,6 +12,7 @@ def parse_namelist(infile, key, convert_func=float):
     Parses a keyword from f90 namelist
     """
     value = None
+    assert os.path.getsize(infile) > 0, 'File {:} is empty'.format(infile)
     with open(infile, 'r') as f:
         for line in f.readlines():
             words = line.split()
