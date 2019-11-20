@@ -8,8 +8,8 @@
 #SBATCH -o stdout.log
 #SBATCH -e stderr.log
 
-# activate python3 virtual env
-/users/karnatuo/sources/venv/python3/bin/activate
+# activate python
+module load python-env
 
 # compress output
 COMP_OPT='d1:cx/12,y/12,deptht/56,time_counter/1'

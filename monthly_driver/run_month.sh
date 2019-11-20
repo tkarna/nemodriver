@@ -167,8 +167,8 @@ if [ "$RESTART" == ".true." ]; then
     # add restart file link generation to job script
     mkdir -p $RUN_DIR/$RESTART_DIR
     LINK_CMD="# link restart files\n\
-python3 link_restart_files.py $RESTART_SRC_DIR $RESTART_DIR restart_out restart_in\n\
-python3 link_restart_files.py $RESTART_SRC_DIR $RESTART_DIR restart_ice_out restart_ice_in"
+python link_restart_files.py $RESTART_SRC_DIR $RESTART_DIR restart_out restart_in\n\
+python link_restart_files.py $RESTART_SRC_DIR $RESTART_DIR restart_ice_out restart_ice_in"
     sed -i "s|#__LINK_RESTART_CMD__|${LINK_CMD}|g" $RUN_DIR/$JOB_SCRIPT
 fi
 
