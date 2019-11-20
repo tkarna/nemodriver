@@ -129,11 +129,11 @@ for fpath in $(find $CFG_TEMPLATE_DIR/ -type d); do
     fi
 done
 
-JOB_SCRIPT="job_nemo.pbs"
+JOB_SCRIPT="job_nemo."${QUEUE_MANAGER}
 echo "Copy $JOB_SCRIPT"
 cp $JOB_SCRIPT $RUN_DIR
 
-POSTPROC_SCRIPT="job_postproc.pbs"
+POSTPROC_SCRIPT="job_postproc."${QUEUE_MANAGER}
 echo "Copy $POSTPROC_SCRIPT"
 cp $POSTPROC_SCRIPT $RUN_DIR
 
@@ -167,8 +167,8 @@ if [ "$RESTART" == ".true." ]; then
     # add restart file link generation to job script
     mkdir -p $RUN_DIR/$RESTART_DIR
     LINK_CMD="# link restart files\n\
-python link_restart_files.py $RESTART_SRC_DIR $RESTART_DIR restart_out restart_in\n\
-python link_restart_files.py $RESTART_SRC_DIR $RESTART_DIR restart_ice_out restart_ice_in"
+python3 link_restart_files.py $RESTART_SRC_DIR $RESTART_DIR restart_out restart_in\n\
+python3 link_restart_files.py $RESTART_SRC_DIR $RESTART_DIR restart_ice_out restart_ice_in"
     sed -i "s|#__LINK_RESTART_CMD__|${LINK_CMD}|g" $RUN_DIR/$JOB_SCRIPT
 fi
 
@@ -184,7 +184,7 @@ done
 
 # compute number of time steps
 cd $RUN_DIR
-NTIMESTEP=$(python compute_ntimestep.py $START_DATE $END_DATE)
+NTIMESTEP=$(python3 compute_ntimestep.py $START_DATE $END_DATE)
 echo "Start date: $START_DATE"
 echo "end   date: $END_DATE"
 echo "Total time steps: $NTIMESTEP"
@@ -226,21 +226,38 @@ if [ -z "$PARENT_JOB" ]; then
     DEP_STR=''
 else
     echo "Jobs starts after parent job: $PARENT_JOB"
-    DEP_STR="-W depend=afterok:${PARENT_JOB}"
+    if [ "$QUEUE_MANAGER" = "slurm" ]; then
+        DEP_STR="-d afterok:${PARENT_JOB}"
+    else
+        DEP_STR="-W depend=afterok:${PARENT_JOB}"
+    fi
 fi
 
 sed -i "s|postproc|proc-${RUNTAG}-${YEAR}${MONTH}|g" $POSTPROC_SCRIPT
 
 if [ -z "$DRYRUN" ]; then
-    QCMD="qsub $DEP_STR $JOB_SCRIPT"
-    echo $QCMD
-    id=$($QCMD)
-    JOB_ID=${id%.*}
-    echo "parsed job id: $JOB_ID"
+    if [ "$QUEUE_MANAGER" = "slurm" ]; then
+        QCMD="sbatch $DEP_STR $JOB_SCRIPT"
+        echo $QCMD
+        id=$($QCMD)
+        JOB_ID=${id##* }
+        echo "parsed job id: $JOB_ID"
 
-    # submit post-proc job as a dependency
-    qsub -W depend=afterok:$JOB_ID $POSTPROC_SCRIPT
-    echo $JOB_ID > $CUR_DIR/last_job_id.txt
+        # submit post-proc job as a dependency
+        sbatch -d afterok:$JOB_ID $POSTPROC_SCRIPT
+        echo $JOB_ID > $CUR_DIR/last_job_id.txt
+
+    else
+        QCMD="qsub $DEP_STR $JOB_SCRIPT"
+        echo $QCMD
+        id=$($QCMD)
+        JOB_ID=${id%.*}
+        echo "parsed job id: $JOB_ID"
+
+        # submit post-proc job as a dependency
+        qsub -W depend=afterok:$JOB_ID $POSTPROC_SCRIPT
+        echo $JOB_ID > $CUR_DIR/last_job_id.txt
+    fi
 fi
 
 cd $CUR_DIR
