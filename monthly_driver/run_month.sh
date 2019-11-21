@@ -227,7 +227,7 @@ if [ -z "$PARENT_JOB" ]; then
 else
     echo "Jobs starts after parent job: $PARENT_JOB"
     if [ "$QUEUE_MANAGER" = "slurm" ]; then
-        DEP_STR="-d afterok:${PARENT_JOB}"
+        DEP_STR="-d afterok:${PARENT_JOB} --kill-on-invalid-dep=yes"
     else
         DEP_STR="-W depend=afterok:${PARENT_JOB}"
     fi
@@ -244,7 +244,7 @@ if [ -z "$DRYRUN" ]; then
         echo "parsed job id: $JOB_ID"
 
         # submit post-proc job as a dependency
-        sbatch -d afterok:$JOB_ID $POSTPROC_SCRIPT
+        sbatch -d afterok:$JOB_ID --kill-on-invalid-dep=yes $POSTPROC_SCRIPT
         echo $JOB_ID > $CUR_DIR/last_job_id.txt
 
     else

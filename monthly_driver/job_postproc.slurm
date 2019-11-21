@@ -5,8 +5,7 @@
 #SBATCH --time=05:00:00
 #SBATCH --ntasks=4
 #SBATCH --mem-per-cpu=4G
-#SBATCH -o stdout.log
-#SBATCH -e stderr.log
+#SBATCH -o postproc.log
 
 # activate python
 module load python-env
