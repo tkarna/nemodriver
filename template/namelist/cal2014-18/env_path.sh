@@ -3,11 +3,11 @@
 #
 
 # root directory where all individual run dirs will be created
-RUNTAG=run18
+RUNTAG=run15
 RUN_ROOT_DIR=../../$RUNTAG
 
 # choose which namelist template to use
-NMLCONFIG=cal2014-18
+NMLCONFIG=cal2014-15
 
 # config specific flags
 FLAG_WAVE=.false.
@@ -25,17 +25,15 @@ RUNDIR_PREFIX='run'
 # directory that contains all the necessary input files
 # - netcdf files, *.xml files, nemo xios binary files
 # NOTE: do not include namelist files here
-CFG_TEMPLATE_DIR=$RUN_ROOT_DIR/../run_template_18/
-
-QUEUE_MANAGER=slurm
+CFG_TEMPLATE_DIR=$RUN_ROOT_DIR/../run_template_15/
 
 # time span to execute, start date of first/last run
 start_date="2014-10-01"
-end_date="2015-09-01"
+end_date="2014-12-01"
 
 # cold/hot start date
 init_date="2014-10-01"
 
 # hotstart option
-HOTSTART=1
-HOTSTART_DIR='/fmi/scratch/project_2001635/karnatuo/runs/NemoNordic/reference/smhi_cal_2014/init_state/run18-init_2014-10-01/'
+HOTSTART=0
+HOTSTART_DIR=''
