@@ -916,7 +916,7 @@
    ln_dynldf_hor = .true.     !  horizontal  (geopotential)
    ln_dynldf_iso = .false.     !  iso-neutral (lap only)
    !                       !  Coefficient
-   nn_ahm_ijk_t  = -30           !  space/time variation of eddy coefficient :
+   nn_ahm_ijk_t  = 32            !  space/time variation of eddy coefficient :
       !                             !  =-30  read in eddy_viscosity_3D.nc file
       !                             !  =-20  read in eddy_viscosity_2D.nc file
       !                             !  =  0  constant 
