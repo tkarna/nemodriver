@@ -40,5 +40,5 @@ init_date="2014-10-01"
 MASTER_PARENT_JOB=""
 
 # hotstart option
-HOTSTART=1
-HOTSTART_DIR='/fmi/scratch/project_2001635/karnatuo/runs/NemoNordic/reference/smhi_cal_2014/run22/init_2014-10/output/restarts'
+HOTSTART=0
+HOTSTART_DIR=''
