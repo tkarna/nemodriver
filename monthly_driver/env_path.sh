@@ -36,6 +36,9 @@ end_date="2015-09-01"
 # cold/hot start date
 init_date="2014-10-01"
 
+# parent run: first run will wait for this to end
+MASTER_PARENT_JOB=""
+
 # hotstart option
 HOTSTART=1
 HOTSTART_DIR='/fmi/scratch/project_2001635/karnatuo/runs/NemoNordic/reference/smhi_cal_2014/run22/init_2014-10/output/restarts'

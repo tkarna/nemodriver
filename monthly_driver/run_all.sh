@@ -9,7 +9,13 @@ echo "Run tag: " $RUNTAG
 echo "Run dir: " $(readlink -f $RUN_ROOT_DIR)
 
 # global run_month flags
-FGLAS=""
+FLAGS=""
+
+PARENT_FLAG=""
+if [ -n "$MASTER_PARENT_JOB" ]; then
+    echo "First run pending on job $MASTER_PARENT_JOB"
+    PARENT_FLAG="-p $MASTER_PARENT_JOB"
+fi
 
 # ------------------------------------------------------------------
 
@@ -23,19 +29,21 @@ while [ "$current_date" != "$check_date" ]; do
     # ------------------------------------------------------------------
     LOGFILE=log_setup_${year}-${month}.txt
     if [ "$current_date" == "$init_date" ]; then
-        # lauch first run
+        # lauch first run from init
         if [ $HOTSTART = 1 ]; then
-            CMD="./run_month.sh $FGLAS -r -R $HOTSTART_DIR -s ${year}-${month}"
+            CMD="./run_month.sh $FLAGS $PARENT_FLAG -r -R $HOTSTART_DIR -s ${year}-${month}"
         else
             # coldstart
-            CMD="./run_month.sh $FGLAS -s ${year}-${month}"
+            CMD="./run_month.sh $FLAGS $PARENT_FLAG -s ${year}-${month}"
         fi
     elif [ "$current_date" == "$start_date" ]; then
-        # restart from prev month that is already finished
-        CMD="./run_month.sh $FGLAS -s ${year}-${month} -r"
+        # launch first run from a later date
+        # restart from previous month that is already finished
+        CMD="./run_month.sh $FLAGS -s ${year}-${month} -r $PARENT_FLAG"
     else
+        # push other jobs to the queue
         PARENT_ID=$(cat last_job_id.txt)
-        CMD="./run_month.sh $FGLAS -s ${year}-${month} -r -p $PARENT_ID"
+        CMD="./run_month.sh $FLAGS -s ${year}-${month} -r -p $PARENT_ID"
     fi
     echo $CMD
     $CMD &> $LOGFILE
