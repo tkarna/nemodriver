@@ -47,6 +47,11 @@ while [ "$current_date" != "$check_date" ]; do
     fi
     echo $CMD
     $CMD &> $LOGFILE
+    if [ "$?" -ne 0 ]; then
+        echo "  FAILED: see $LOGFILE"
+        tail -n 10 $LOGFILE
+        exit 1
+    fi 
 
     # ------------------------------------------------------------------
     # increment date

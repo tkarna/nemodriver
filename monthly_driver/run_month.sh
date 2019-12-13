@@ -77,6 +77,8 @@ if [ ${#MONTH} -ne "2" ]; then
     exit 1
 fi
 
+set -e
+
 source env_path.sh
 
 #-----------------------------------------------------------------------------
@@ -101,6 +103,10 @@ fi
 
 RUN_DIR=$RUN_ROOT_DIR/${RUNDIR_PREFIX}_${YEAR}-${MONTH}
 echo "Copying setup to $RUN_DIR"
+if [ -d "$RUN_DIR" ] && [ "$(ls -A $RUN_DIR)" ]; then
+    echo "Run directory is not empty: $RUN_DIR"
+    exit -1
+fi
 mkdir -p $RUN_DIR
 
 mkdir -p $RUN_DIR/output/{data,logs,restarts}
