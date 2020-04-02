@@ -3,8 +3,8 @@
 #SBATCH --account=Project_2001635
 #SBATCH --partition=fmi
 #SBATCH --time=14:00:00
-#SBATCH --ntasks=330
-##SBATCH --cpu-bind=sockets
+#SBATCH --ntasks=319
+#SBATCH --nodes=8
 #SBATCH --exclusive
 #SBATCH -o stdout.log
 #SBATCH -e stderr.log
@@ -22,8 +22,8 @@ echo "Run begins at" $(date "+%Y-%m-%d %H:%M:%S")
 #__LINK_RESTART_CMD__
  
 cat > task_config.txt <<EOL
-0-321 ./nemo.exe
-322-329 ./xios.exe
+0-310 ./nemo.exe
+311-318 ./xios.exe
 EOL
 
 srun --multi-prog task_config.txt

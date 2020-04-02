@@ -3,11 +3,11 @@
 #
 
 # root directory where all individual run dirs will be created
-RUNTAG=run31b
+RUNTAG=run27a
 RUN_ROOT_DIR=../../$RUNTAG
 
 # choose which namelist template to use
-NMLCONFIG=cal2014-25d
+NMLCONFIG=cal2014-27a
 
 # config specific flags
 FLAG_WAVE=.false.
@@ -25,7 +25,7 @@ RUNDIR_PREFIX='run'
 # directory that contains all the necessary input files
 # - netcdf files, *.xml files, nemo xios binary files
 # NOTE: do not include namelist files here
-CFG_TEMPLATE_DIR=$RUN_ROOT_DIR/../run_template_31/
+CFG_TEMPLATE_DIR=$RUN_ROOT_DIR/../run_template_25-fix-5m/
 
 QUEUE_MANAGER=slurm
 
@@ -42,4 +42,3 @@ MASTER_PARENT_JOB=""
 # hotstart option
 HOTSTART=0
 HOTSTART_DIR=''
-
