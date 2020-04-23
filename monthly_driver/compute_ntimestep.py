@@ -7,37 +7,51 @@ import dateutil.parser
 import numpy
 
 
-def parse_namelist(infile, key, convert_func=float):
+def parse_namelist(infile, key, convert_func=float, run_dir=None):
     """
     Parses a keyword from f90 namelist
     """
     value = None
-    assert os.path.getsize(infile) > 0, 'File {:} is empty'.format(infile)
-    with open(infile, 'r') as f:
+    filename = infile if run_dir is None else os.path.join(run_dir, infile)
+    with open(filename, 'r') as f:
         for line in f.readlines():
             words = line.split()
             if len(words) > 2 and words[0] == key:
                 value = convert_func(words[2])
-    assert value is not None, '{:} not found in {:}'.format(infile)
+    assert value is not None, '{:} not found in {:}'.format(key, filename)
     return value
 
 
-def parse_namelist_with_cfg(infile_ref, infile_cfg, key, convert_func=float):
+def parse_namelist_with_cfg(infile_ref, infile_cfg, key, convert_func=float,
+                            run_dir=None):
     """
     Parses a keyword from cfg and ref namelist
     """
+    _ref = infile_ref if run_dir is None else os.path.join(run_dir, infile_ref)
+    _cfg = infile_cfg if run_dir is None else os.path.join(run_dir, infile_cfg)
     try:
-        value = parse_namelist(infile_cfg, key, convert_func=convert_func)
-    except AssertionError:
-        value = parse_namelist(infile_ref, key, convert_func=convert_func)
+        value = parse_namelist(_cfg, key, convert_func=convert_func)
+    except (AssertionError, IndexError):
+        value = parse_namelist(_ref, key, convert_func=convert_func)
     return value
 
 
-def parse_timestep(infile='namelist_ref', infile_cfg='namelist_cfg'):
+def parse_timestep(infile='namelist_ref', infile_cfg='namelist_cfg',
+                   run_dir=None):
     """
     Parses 3D time step from NEMO namelist file
     """
-    return parse_namelist_with_cfg(infile, infile_cfg, 'rn_rdt', float)
+    val = None
+    for key in ['rn_dt', 'rn_Dt']:
+        try:
+            val = parse_namelist_with_cfg(infile, infile_cfg, key,
+                                          convert_func=float, run_dir=run_dir)
+        except (AssertionError, IndexError):
+            pass
+        if val is not None:
+            continue
+    assert val is not None, 'Could not parse time step from {:}'.format(infile)
+    return val
 
 
 def compute_ntimesteps(starttime, endtime, timestep):

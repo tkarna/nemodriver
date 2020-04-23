@@ -3,11 +3,11 @@
 #
 
 # root directory where all individual run dirs will be created
-RUNTAG=preop01
+RUNTAG=run32
 RUN_ROOT_DIR=../../$RUNTAG
 
 # choose which namelist template to use
-NMLCONFIG=preop2018-01
+NMLCONFIG=cal2014-32
 
 # config specific flags
 FLAG_WAVE=.false.
@@ -25,13 +25,13 @@ RUNDIR_PREFIX='run'
 # directory that contains all the necessary input files
 # - netcdf files, *.xml files, nemo xios binary files
 # NOTE: do not include namelist files here
-CFG_TEMPLATE_DIR=$RUN_ROOT_DIR/../run_template/
+CFG_TEMPLATE_DIR=$RUN_ROOT_DIR/../run_template_32/
 
 QUEUE_MANAGER=slurm
 
 # time span to execute, start date of first/last run
-start_date="2017-10-01"
-end_date="2018-10-01"
+start_date="2014-10-01"
+end_date="2014-12-01"
 
 # cold/hot start date
 init_date="2017-10-01"
