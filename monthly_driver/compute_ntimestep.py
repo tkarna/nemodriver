@@ -42,7 +42,7 @@ def parse_timestep(infile='namelist_ref', infile_cfg='namelist_cfg',
     Parses 3D time step from NEMO namelist file
     """
     val = None
-    for key in ['rn_dt', 'rn_Dt']:
+    for key in ['rn_rdt', 'rn_Dt']:
         try:
             val = parse_namelist_with_cfg(infile, infile_cfg, key,
                                           convert_func=float, run_dir=run_dir)
