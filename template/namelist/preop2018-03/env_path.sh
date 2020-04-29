@@ -3,11 +3,11 @@
 #
 
 # root directory where all individual run dirs will be created
-RUNTAG=preop04
+RUNTAG=preop03
 RUN_ROOT_DIR=../../$RUNTAG
 
 # choose which namelist template to use
-NMLCONFIG=preop2018-04
+NMLCONFIG=preop2018-03
 
 # config specific flags
 FLAG_WAVE=.false.
