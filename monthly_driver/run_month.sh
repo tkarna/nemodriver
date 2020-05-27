@@ -203,10 +203,16 @@ else
     NML_FILE=namelist_cfg
 fi
 
+# check if year is a leap year 0|1
+LEAPYEAR=$(python -c \
+    'import sys, calendar; print(int(calendar.isleap(int(sys.argv[1]))))' $YEAR)
+echo $LEAPYEAR
+
 echo "Generating namelist $NML_FILE"
 sed -i "s|__INITDATE__|${START_DATE}|g" $NML_FILE
 sed -i "s|__NTIMESTEP__|${NTIMESTEP}|g" $NML_FILE
 sed -i "s|__RESTART__|${RESTART}|g" $NML_FILE
+sed -i "s|__LEAPYEAR__|${LEAPYEAR}|g" $NML_FILE
 
 sed -i "s|__FLAG_WAVE__|${FLAG_WAVE}|g" $NML_FILE
 sed -i "s|__FLAG_WDRAG__|${FLAG_WDRAG}|g" $NML_FILE
